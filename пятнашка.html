@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Пятнашки</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }.game {
+  text-align: center;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 80px);
+  grid-template-rows: repeat(4, 80px);
+  gap: 5px;
+  margin: 20px auto;
+}
+
+.tile {
+  width: 80px;
+  height: 80px;
+  background: #4caf50;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 8px;
+  user-select: none;
+}
+
+.tile.empty {
+  background: transparent;
+  cursor: default;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+  </style>
+</head>
+<body>
+  <div class="game">
+    <h1>Пятнашки</h1>
+    <div id="board" class="board"></div>
+    <button onclick="shuffle()">Перемешать</button>
+  </div>  <script>
+    const board = document.getElementById('board');
+    let tiles = [];
+
+    function init() {
+      tiles = [...Array(15).keys()].map(n => n + 1);
+      tiles.push(null); // пустая клетка
+      draw();
+    }
+
+    function draw() {
+      board.innerHTML = '';
+      tiles.forEach((value, index) => {
+        const tile = document.createElement('div');
+        tile.className = 'tile';
+
+        if (value === null) {
+          tile.classList.add('empty');
+        } else {
+          tile.textContent = value;
+          tile.onclick = () => move(index);
+        }
+
+        board.appendChild(tile);
+      });
+    }
+
+    function move(index) {
+      const emptyIndex = tiles.indexOf(null);
+      const validMoves = [
+        emptyIndex - 1,
+        emptyIndex + 1,
+        emptyIndex - 4,
+        emptyIndex + 4
+      ];
+
+      if (validMoves.includes(index)) {
+        [tiles[index], tiles[emptyIndex]] = [tiles[emptyIndex], tiles[index]];
+        draw();
+        checkWin();
+      }
+    }
+
+    function shuffle() {
+      for (let i = tiles.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+      }
+      draw();
+    }
+
+    function checkWin() {
+      for (let i = 0; i < 15; i++) {
+        if (tiles[i] !== i + 1) return;
+      }
+      alert('Поздравляю! Ты собрал пятнашки 🎉');
+    }
+
+    init();
+  </script></body>
+</html>

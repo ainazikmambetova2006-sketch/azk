@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Спортивный клуб</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav {
+            background: #eee;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav button {
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .sport-image {
+            width: 100px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 2px solid #4CAF50;
+        }
+
+        form input, form select, form button {
+            display: block;
+            margin: 10px 0;
+            padding: 8px;
+            width: 100%;
+            max-width: 300px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 id="title">Спортивный клуб</h1>
+    <button onclick="toggleLanguage()">🌍 Русский / Кыргызский</button>
+</header>
+
+<section id="schedule">
+    <h2 id="scheduleTitle">Расписание тренировок</h2>
+
+    <table>
+        <tr>
+            <th id="day">День</th>
+            <th id="sport">Вид спорта</th>
+            <th>Изображение</th>
+            <th id="time">Время</th>
+        </tr>
+        <tr>
+            <td id="mon">Понедельник</td>
+            <td id="football">Футбол</td>
+            <td>
+                <img class="sport-image"
+                     src="https://images.unsplash.com/photo-1575361204480-aadea25e6e68?auto=format&fit=crop&w=200&q=80">
+            </td>
+            <td>18:00</td>
+        </tr>
+        <tr>
+            <td id="wed">Среда</td>
+            <td id="box">Бокс</td>
+            <td>
+                <img class="sport-image"
+                     src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=200&q=80">
+            </td>
+            <td>19:00</td>
+        </tr>
+        <tr>
+            <td id="fri">Пятница</td>
+            <td id="fitness">Фитнес</td>
+            <td>
+                <img class="sport-image"
+                     src="https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&w=200&q=80">
+            </td>
+            <td>17:00</td>
+        </tr>
+    </table>
+</section>
+
+<section id="register">
+    <h2 id="registerTitle">Регистрация на тренировку</h2>
+
+    <form>
+        <input type="text" id="nameInput" placeholder="ФИО" required>
+
+        <select id="sportSelect" required>
+            <option id="chooseSport">Выберите вид спорта</option>
+            <option>Футбол</option>
+            <option>Бокс</option>
+            <option>Фитнес</option>
+        </select>
+
+        <button type="submit" id="submitBtn">Записаться</button>
+    </form>
+</section>
+
+<script>
+    let isRussian = true;
+
+    function toggleLanguage() {
+        if (isRussian) {
+            document.getElementById("title").innerText = "Спорт клубу";
+            document.getElementById("scheduleTitle").innerText = "Машыгуу графиги";
+            document.getElementById("registerTitle").innerText = "Машыгууга катталуу";
+
+            document.getElementById("day").innerText = "Күн";
+            document.getElementById("sport").innerText = "Спорт түрү";
+            document.getElementById("time").innerText = "Убакыт";
+
+            document.getElementById("mon").innerText = "Дүйшөмбү";
+            document.getElementById("wed").innerText = "Шаршемби";
+            document.getElementById("fri").innerText = "Жума";
+
+            document.getElementById("football").innerText = "Футбол";
+            document.getElementById("box").innerText = "Бокс";
+            document.getElementById("fitness").innerText = "Фитнес";
+
+            document.getElementById("nameInput").placeholder = "Аты-жөнү";
+            document.getElementById("chooseSport").innerText = "Спорт түрүн тандаңыз";
+            document.getElementById("submitBtn").innerText = "Катталуу";
+
+            isRussian = false;
+        } else {
+            document.getElementById("title").innerText = "Спортивный клуб";
+            document.getElementById("scheduleTitle").innerText = "Расписание тренировок";
+            document.getElementById("registerTitle").innerText = "Регистрация на тренировку";
+
+            document.getElementById("day").innerText = "День";
+            document.getElementById("sport").innerText = "Вид спорта";
+            document.getElementById("time").innerText = "Время";
+
+            document.getElementById("mon").innerText = "Понедельник";
+            document.getElementById("wed").innerText = "Среда";
+            document.getElementById("fri").innerText = "Пятница";
+
+            document.getElementById("football").innerText = "Футбол";
+            document.getElementById("box").innerText = "Бокс";
+            document.getElementById("fitness").innerText = "Фитнес";
+
+            document.getElementById("nameInput").placeholder = "ФИО";
+            document.getElementById("chooseSport").innerText = "Выберите вид спорта";
+            document.getElementById("submitBtn").innerText = "Записаться";
+
+            isRussian = true;
+        }
+    }
+</script>
+
+</body>
+</html>
