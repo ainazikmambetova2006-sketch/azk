@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Электронный журнал - AlebiiM</title>
+    <style>
+        /* Общие стили для имитации интерфейса */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f6f9; /* Светлый фон */
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Шапка с меню и названием */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #333;
+            margin: 0;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        .nav-tabs a {
+            text-decoration: none;
+            color: #555;
+            padding: 5px 0;
+        }
+
+        .nav-tabs a.active {
+            color: #007bff; /* Активный синий цвет */
+            border-bottom: 2px solid #007bff;
+            font-weight: bold;
+        }
+
+        /* Блок с кнопками "Поставить всем" */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .action-buttons button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .action-buttons .primary-btn {
+            background-color: #28a745; /* Зеленая кнопка */
+            color: white;
+        }
+
+        .action-buttons .secondary-btn {
+            background-color: #e9ecef; /* Серая кнопка */
+            color: #333;
+        }
+
+        /* Стили для таблицы/списка учеников */
+        .journal-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .journal-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .journal-item:last-child {
+            border-bottom: none;
+        }
+
+        .student-number {
+            width: 30px;
+            text-align: right;
+            margin-right: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .student-name {
+            flex-grow: 1;
+            font-size: 15px;
+        }
+
+        .student-group {
+            width: 100px;
+            text-align: center;
+        }
+
+        .group-tag {
+            background-color: #007bff;
+            color: white;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Обновленные стили для блока оценок */
+        .grade-input {
+            width: 350px; 
+            display: flex;
+            align-items: center;
+            gap: 12px; 
+            justify-content: flex-end; 
+        }
+        
+        .grade-option {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .grade-input span {
+            font-size: 14px;
+            color: #555;
+            position: absolute;
+            left: 20px;
+        }
+
+        .grade-input input[type="radio"] {
+            margin: 0;
+            transform: scale(1.1);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .grade-input input[type="radio"]:checked {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+/* Стили для правой части с именем преподавателя */
+        .user-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Заголовок столбцов для меток П, Б, Н, 2, 3, 4, 5 */
+        .grade-header-labels {
+            width: 350px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding-right: 15px; 
+        }
+        .grade-header-labels span {
+            width: 15px; 
+            text-align: center;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="user-info">
+        Бекежанов  М.М.<br>
+        <small>Кафедра</small>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <span style="font-weight: bold; font-size: 18px; color: #333;">AlebiiM</span>
+            </div>
+            <div class="nav-tabs">
+                <a href="#" class="active">Главная</a>
+                <a href="#">Электронный журнал</a>
+                <a href="#">УМК</a>
+                <a href="#">Рейтинг преподавателей</a>
+                <a href="#">Библиотека</a>
+                <a href="#">Куратор</a>
+                <a href="#">Тестирование</a>
+                <a href="#">Еще</a>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="primary-btn">Поставить всем П</button>
+            <button class="secondary-btn">Поставить всем Н</button>
+        </div>
+
+        <ul class="journal-list">
+            <li class="journal-item" style="font-weight: bold; color: #555; background-color: #f8f9fa; border-top: 1px solid #eee;">
+                <div class="student-number">#</div>
+                <div class="student-name">Ф.И.О. студента</div>
+                <div class="student-group" style="text-align: left;">Группа</div>
+                <div class="grade-header-labels">
+                    <span>П</span>
+                    <span>Б</span>
+                    <span>Н</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                </div>
+            </li>
+
+            <li class="journal-item">
+                <div class="student-number">1)</div>
+                <div class="student-name">Байыш  кызы  Каныкей</div>
+                <div class="student-group"><span class="group-tag">ИВТ-24</span></div>
+                <div class="grade-input">
+                    <input type="radio" name="grade_1" value="P">
+                    <input type="radio" name="grade_1" value="B">
+                    <input type="radio" name="grade_1" value="N">
+                    <input type="radio" name="grade_1" value="2">
+                    <input type="radio" name="grade_1" value="3">
+                    <input type="radio" name="grade_1" value="4">
+                    <input type="radio" name="grade_1" value="5">
+                </div>
+            </li>
+
+            <li class="journal-item">
+                <div class="student-number">2)</div>
+                <div class="student-name">Казыбекова  Аруузаада  Жолдобековна</div>
+                <div class="student-group"><span class="group-tag">ИВТ-24</span></div>
+                <div class="grade-input">
+                    <input type="radio" name="grade_2" value="P">
+                    <input type="radio" name="grade_2" value="B">
+                    <input type="radio" name="grade_2" value="N">
+                    <input type="radio" name="grade_2" value="2">
+                    <input type="radio" name="grade_2" value="3">
+                    <input type="radio" name="grade_2" value="4">
+                    <input type="radio" name="grade_2" value="5">
+                </div>
+            </li>
+<li class="journal-item">
+                <div class="student-number">3)</div>
+                <div class="student-name">Канымет уулу Дастан</div>
+                <div class="student-group"><span class="group-tag">ИВТ-24</span></div>
+                <div class="grade-input">
+                    <input type="radio" name="grade_3" value="P">
+                    <input type="radio" name="grade_3" value="B">
+                    <input type="radio" name="grade_3" value="N">
+                    <input type="radio" name="grade_3" value="2">
+                    <input type="radio" name="grade_3" value="3">
+                    <input type="radio" name="grade_3" value="4">
+                    <input type="radio" name="grade_3" value="5">
+                </div>
+            </li>
+
+             <li class="journal-item">
+                <div class="student-number">4)</div>
+                <div class="student-name">Кожобеков  Эрнис Бактыбекович</div>
+                <div class="student-group"><span class="group-tag">ИВТ-24</span></div>
+                <div class="grade-input">
+                    <input type="radio" name="grade_4" value="P">
+                    <input type="radio" name="grade_4" value="B">
+                    <input type="radio" name="grade_4" value="N">
+                    <input type="radio" name="grade_4" value="2">
+                    <input type="radio" name="grade_4" value="3">
+                    <input type="radio" name="grade_4" value="4">
+                    <input type="radio" name="grade_4" value="5">
+                </div>
+            </li>
+            <li class="journal-item">
+                <div class="student-number">5)</div>
+                <div class="student-name">Колбаев  Таалайбек Азаматович</div>
+                <div class="student-group"><span class="group-tag">ИВТ-24</span></div>
+                <div class="grade-input">
+                    <input type="radio" name="grade_5" value="P">
+                    <input type="radio" name="grade_5" value="B">
+                    <input type="radio" name="grade_5" value="N">
+                    <input type="radio" name="grade_5" value="2">
+                    <input type="radio" name="grade_5" value="3">
+                    <input type="radio" name="grade_5" value="4">
+                    <input type="radio" name="grade_5" value="5">
+                </div>
+            </li>
+            <li class="journal-item">
+                <div class="student-number">6)</div>
+                <div class="student-name">Максатбек уулу Эрбол</div>
+                <div class="student-group"><span class="group-tag">ИВТ-24</span></div>
+                <div class="grade-input">
+                    <input type="radio" name="grade_6" value="P">
+                    <input type="radio" name="grade_6" value="B">
+                    <input type="radio" name="grade_6" value="N">
+                    <input type="radio" name="grade_6" value="2">
+                    <input type="radio" name="grade_6" value="3">
+                    <input type="radio" name="grade_6" value="4">
+                    <input type="radio" name="grade_6" value="5">
+                </div>
+            </li>
+            <li class="journal-item">
+                <div class="student-number">7)</div>
+                <div class="student-name">Мамбетова Айназик Алмазбековна</div>
+                <div class="student-group"><span class="group-tag">ИВТ-24</span></div>
+                <div class="grade-input">
+                    <input type="radio" name="grade_7" value="P">
+                    <input type="radio" name="grade_7" value="B">
+                    <input type="radio" name="grade_7" value="N">
+                    <input type="radio" name="grade_7" value="2">
+                    <input type="radio" name="grade_7" value="3">
+<input type="radio" name="grade_7" value="4">
+                    <input type="radio" name="grade_7" value="5">
+                </div>
+            </li>
+            <li class="journal-item">
+                <div class="student-number">8)</div>
+                <div class="student-name">Мирланов Амантур Мирланович</div>
+                <div class="student-group"><span class="group-tag">ИВТ-24</span></div>
+                <div class="grade-input">
+                    <input type="radio" name="grade_8" value="P">
+                    <input type="radio" name="grade_8" value="B">
+                    <input type="radio" name="grade_8" value="N">
+                    <input type="radio" name="grade_8" value="2">
+                    <input type="radio" name="grade_8" value="3">
+                    <input type="radio" name="grade_8" value="4">
+                    <input type="radio" name="grade_8" value="5">
+                </div>
+            </li>
+            <li class="journal-item">
+                <div class="student-number">9)</div>
+                <div class="student-name">Таалайбеков Бактияр Таалайбекович</div>
+                <div class="student-group"><span class="group-tag">ИВТ-24</span></div>
+                <div class="grade-input">
+                    <input type="radio" name="grade_9" value="P">
+                    <input type="radio" name="grade_9" value="B">
+                    <input type="radio" name="grade_9" value="N">
+                    <input type="radio" name="grade_9" value="2">
+                    <input type="radio" name="grade_9" value="3">
+                    <input type="radio" name="grade_9" value="4">
+                    <input type="radio" name="grade_9" value="5">
+                </div>
+            </li>
+            <li class="journal-item">
+                <div class="student-number">10)</div>
+                <div class="student-name">Усупбеков Санжар Нурбекович</div>
+                <div class="student-group"><span class="group-tag">ИВТ-24</span></div>
+                <div class="grade-input">
+                    <input type="radio" name="grade_10" value="P">
+                    <input type="radio" name="grade_10" value="B">
+                    <input type="radio" name="grade_10" value="N">
+                    <input type="radio" name="grade_10" value="2">
+                    <input type="radio" name="grade_10" value="3">
+                    <input type="radio" name="grade_10" value="4">
+                    <input type="radio" name="grade_10" value="5">
+                </div>
+            </li>
+            <li class="journal-item">
+                <div class="student-number">11)</div>
+                <div class="student-name">Шамшыбеков Байэл Нурланович</div>
+                <div class="student-group"><span class="group-tag">ИВТ-24</span></div>
+                <div class="grade-input">
+                    <input type="radio" name="grade_11" value="P">
+                    <input type="radio" name="grade_11" value="B">
+                    <input type="radio" name="grade_11" value="N">
+                    <input type="radio" name="grade_11" value="2">
+                    <input type="radio" name="grade_11" value="3">
+                    <input type="radio" name="grade_11" value="4">
+                    <input type="radio" name="grade_11" value="5">
+                </div>
+            </li>
+            <li class="journal-item">
+                <div class="student-number">12)</div>
+                <div class="student-name">Эсенов  Эсенгелди Нурланович</div>
+                <div class="student-group"><span class="group-tag">ИВТ-24</span></div>
+                <div class="grade-input">
+                    <input type="radio" name="grade_12" value="P">
+                    <input type="radio" name="grade_12" value="B">
+<input type="radio" name="grade_12" value="N">
+                    <input type="radio" name="grade_12" value="2">
+                    <input type="radio" name="grade_12" value="3">
+                    <input type="radio" name="grade_12" value="4">
+                    <input type="radio" name="grade_12" value="5">
+                </div>
+            </li>
+        </ul>
+
+    </div>
+</body>
+</html>
